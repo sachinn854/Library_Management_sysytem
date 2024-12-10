@@ -57,6 +57,29 @@ void Book::display() const {
         cout << " - Not Available" << endl;
     }
 }
+// Method to load members from the file
+void Library::loadMembers() {
+    ifstream memberFile("members.txt");
+    string name, email;
+    int id;
+    
+    while (getline(memberFile, name, ',') && memberFile >> id && memberFile.ignore() && getline(memberFile, email)) {
+        members.push_back(Member{name, id, email, "Member"});
+    }
+    memberFile.close();
+}
+
+// Method to load librarians from the file
+void Library::loadLibrarians() {
+    ifstream librarianFile("librarians.txt");
+    string name, email;
+    int id;
+
+    while (getline(librarianFile, name, ',') && librarianFile >> id && librarianFile.ignore() && getline(librarianFile, email)) {
+        members.push_back(Member{name, id, email, "Librarian"});
+    }
+    librarianFile.close();
+}
 
 // Method to register a new Member or Librarian
 void Library::registerUser(Member& member) {
@@ -80,6 +103,30 @@ void Library::registerUser(Member& member) {
         }
     }
 }
+
+/*
+// Method to register a new Member or Librarian
+void Library::registerUser(Member& member) {
+    if (member.role == "Member") {
+        ofstream memberFile("members.txt", ios::app); // Append to file
+        if (memberFile.is_open()) {
+            memberFile << member.name << "," << member.id << "," << member.email << endl;
+            memberFile.close();
+            cout << "Member registered successfully!" << endl;
+        } else {
+            cout << "Error: Could not open members.txt file!" << endl;
+        }
+    } else if (member.role == "Librarian") {
+        ofstream librarianFile("librarians.txt", ios::app); // Append to file
+        if (librarianFile.is_open()) {
+            librarianFile << member.name << "," << member.id << "," << member.email << endl;
+            librarianFile.close();
+            cout << "Librarian registered successfully!" << endl;
+        } else {
+            cout << "Error: Could not open librarians.txt file!" << endl;
+        }
+    }
+}*/
 
 // Method to login as a Member
 bool Library::loginAsMember(int id, const string& email) {
@@ -169,7 +216,7 @@ void Library::loadBooks() {
     }
     bookFile.close();
 }
-
+/*
 void Library::loadMembers() {
     ifstream memberFile("members.txt");
     string name, email;
@@ -188,7 +235,7 @@ void Library::loadLibrarians() {
         members.push_back(Member{name, id, email, "Librarian"});
     }
     librarianFile.close();
-}
+}*/
 
 // Helper methods to save data to files
 void Library::saveBooks() {
