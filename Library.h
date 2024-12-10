@@ -14,12 +14,12 @@ class Library;
 // Class to represent a Member (both Member and Librarian inherit from this base class)
 class Member {
 public:
-string name;
+    string name;
     int id;
     string email;
     string role;
     vector<string> borrowedBooks;
-   Member():name(""), id(0), email(""), role("") {}
+    Member() : name(""), id(0), email(""), role("") {}
     // Constructor to initialize member data
     Member(string name, int id, string email, string role) 
         : name(name), id(id), email(email), role(role) {}
@@ -28,10 +28,7 @@ string name;
     void inputMemberData(const string& role);
     
     // Function to display member data
-    void display() const {
-        cout << "Name: " << name << "\nID: " << id << "\nEmail: " << email << endl;
-        cout << "Role: " << role << endl;
-    }
+    void display() const;
 
     // Borrow a book
     void borrowBook(const string& bookName);
