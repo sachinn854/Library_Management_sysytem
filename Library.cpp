@@ -152,7 +152,7 @@ bool Library::returnBook(Member& member, const string& bookTitle) {
 
 // Method to recommend books based on borrowing trends
 void Library::recommendBooks(Member& member) {
-    cout << "Recommended Books based on your borrowing history:" << endl;
+    cout << "Recommendations based on your borrowing history:" << endl;
     for (const auto& book : member.borrowedBooks) {
         cout << "You borrowed: " << book << endl;
     }
@@ -171,20 +171,20 @@ void Library::loadBooks() {
 
 void Library::loadMembers() {
     ifstream memberFile("members.txt");
-    string name, email, role;
+    string name, email;
     int id;
-    while (getline(memberFile, name, ',') && memberFile >> id && getline(memberFile, email, ',') && getline(memberFile, role)) {
-        members.push_back(Member{name, id, email, role});
+    while (getline(memberFile, name, ',') && memberFile >> id && memberFile.ignore() && getline(memberFile, email)) {
+        members.push_back(Member{name, id, email, "Member"});
     }
     memberFile.close();
 }
 
 void Library::loadLibrarians() {
     ifstream librarianFile("librarians.txt");
-    string name, email, role;
+    string name, email;
     int id;
-    while (getline(librarianFile, name, ',') && librarianFile >> id && getline(librarianFile, email, ',') && getline(librarianFile, role)) {
-        members.push_back(Member{name, id, email, role});
+    while (getline(librarianFile, name, ',') && librarianFile >> id && librarianFile.ignore() && getline(librarianFile, email)) {
+        members.push_back(Member{name, id, email, "Librarian"});
     }
     librarianFile.close();
 }
@@ -209,7 +209,9 @@ void Library::saveMembers() {
 void Library::saveLibrarians() {
     ofstream librarianFile("librarians.txt");
     for (const auto& member : members) {
-        librarianFile << member.name << "," << member.id << "," << member.email << endl;
+        if (member.role == "Librarian") {
+            librarianFile << member.name << "," << member.id << "," << member.email << endl;
+        }
     }
     librarianFile.close();
 }
